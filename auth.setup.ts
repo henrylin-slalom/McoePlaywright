@@ -7,6 +7,7 @@ dotenv.config();
 
 const d365Sales = './.auth/d365sales.json';
 const d365Portal = './.auth/d365portal.json';
+const mcoeDemoPortal = './.auth/mcoeDemoPortal.json';
 
 setup('authenticate to d365 sales', async ({ page }) => {
 
@@ -53,6 +54,25 @@ setup('authenticate to d365 portal', async ({ page }) => {
     // End of authentication steps.
 
     await page.context().storageState({ path: d365Portal });
+});
+
+setup('authenticate to mcoe playwrightdemo portal', async ({ page }) => {
+    const result = await isFileExists(mcoeDemoPortal);
+
+    if (result) {
+        return;
+    }
+
+    // Perform authentication steps.
+    await page.goto(process.env.PORTAL_USER_SIGN_IN_URL as string);
+    await page.getByLabel('Username').fill(process.env.PORTAL_USER_USERNAME as string);
+    await page.getByLabel('Password').fill(process.env.PORTAL_USER_PASSWORD as string);
+    await page.getByRole('button', { name: 'Sign in' }).click();
+    await page.waitForURL((url) => url.href.includes("profile" as string));
+
+    // End of authentication steps.
+
+    await page.context().storageState({ path: mcoeDemoPortal });
 });
 
 

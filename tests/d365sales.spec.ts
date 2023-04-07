@@ -26,7 +26,6 @@ test.describe(() => {
     await page.getByRole('tab', { name: 'Products' }).click();
     await page.getByRole('combobox', { name: 'Price List, Lookup' }).fill("MCOE");
     await page.getByText('MCOE', { exact: true }).click();
-    //getByRole('combobox', { name: 'Revenue' })
 
     //Save
     await page.getByRole('menuitem', { name: 'Save (CTRL+S)' }).click();
