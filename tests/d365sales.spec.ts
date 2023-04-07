@@ -8,7 +8,7 @@ test.describe(() => {
     await page.waitForURL((url)=> url.href.includes("opportunity"));
     
     // Expect #1 hamburger menu to be visible.
-    await expect(page.getByRole('button', { name: 'App launcher' })).toBeVisible({timeout:15000});
+    await expect(page.getByRole('button', { name: 'App launcher' })).toBeVisible({timeout:45000});
 
     //try to save without topic
     await page.getByRole('menuitem', { name: 'New', exact: true }).click();
@@ -29,13 +29,16 @@ test.describe(() => {
 
     //Save
     await page.getByRole('menuitem', { name: 'Save (CTRL+S)' }).click();
+    
+    await page.waitForURL((url) => url.href.includes("id" as string));
 
     //add products
-    await page.getByRole('menuitem', { name: 'Add products' }).click({timeout:15000});
+    page.getByRole('menuitem', { name: 'Add products' }).click();
     await page.getByRole('textbox', { name: 'Quantity This field is business required.' }).fill('10');
     await page.getByRole('button', { name: 'Add' }).click();
     await page.getByRole('button', { name: 'Save to opportunity' }).click();
-
+    
+    await expect(page.getByRole('textbox', { name: 'Total Amount' })).toBeVisible();
     await expect(page.getByRole('textbox', { name: 'Total Amount' })).toHaveValue('$42.90');
 
   

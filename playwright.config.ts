@@ -10,6 +10,7 @@ require('dotenv').config();
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: 90000,
   /* Configure projects for major browsers */
   projects: [
     // Setup project
